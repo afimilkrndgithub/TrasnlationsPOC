@@ -1,0 +1,19 @@
+﻿@inject IStringLocalizer<Shared.Navigation> NL
+
+<nav>
+    <ul class="navigation-list">
+        <li>
+            <NavLink ActiveClass="nav-active" class="navigation-item" href="/" Match="NavLinkMatch.All">
+                @NL["Home"]</NavLink>
+                </li>
+        <li>
+            <NavLink ActiveClass="nav-active" class="navigation-item" href="/table" Match="NavLinkMatch.All">
+                @NL["Table"]
+            </NavLink>
+        </li>
+    </ul>
+</nav>
+
+@code {
+
+}

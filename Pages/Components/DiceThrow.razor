@@ -1,0 +1,34 @@
+﻿@inject IStringLocalizer<Index> IL
+
+<div class="dice-container">
+    <div class="dice @("dice-face-" + DiceA)">
+        @for (int i = 0; i < DiceA; i++)
+        {
+            <span class="dice-pip"></span>
+        }
+    </div>
+    <div class="dice @("dice-face-" + DiceB)">
+        @for (int i = 0; i < DiceB; i++)
+        {
+            <span class="dice-pip"></span>
+        }
+    </div>
+
+    <button @onclick="ThrowDice">@IL["Roll"]</button>
+</div>
+
+
+@code {
+    public byte DiceA { get; set; } = 1;
+    public byte DiceB { get; set; } = 1;
+
+    void ThrowDice()
+    {
+        // Throw two dices and set the relevat properties with the dice values
+
+        var random = new Random();
+        DiceA = (byte)random.Next(1, 7);
+        DiceB = (byte)random.Next(1, 7);
+        StateHasChanged();
+    }
+}

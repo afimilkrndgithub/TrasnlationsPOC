@@ -1,0 +1,77 @@
+﻿@page "/table";
+@layout MainLayout
+@using Shared
+@inject IStringLocalizer<Shared.Table> TL
+
+<h1>@TL["Title"]</h1>
+<SfGrid TValue="TableItem" DataSource="Data" Height="600px" Width="100%" >
+    <GridColumns>
+        <GridColumn HeaderText="@TL["ID"]" Field="@nameof(TableItem.ID)"></GridColumn>
+        <GridColumn HeaderText="@TL["Name"]" Field="@nameof(TableItem.Name)"></GridColumn>
+        <GridColumn HeaderText="@TL["Value"]" Field="@nameof(TableItem.Value)"></GridColumn>
+        <GridColumn HeaderText="@TL["ItemType"]" Field="@nameof(TableItem.TableItemType)">
+            <Template>
+                <span>@(@TL["ItemType." + ((TableItem)context).TableItemType])</span>
+            </Template>
+        </GridColumn>
+    </GridColumns>
+</SfGrid>
+<button @onclick="RandomaizeTable">@TL["Randomize"]</button>
+
+@code {
+    public List<TableItem> Data { get; set; }
+
+    public Table()
+    {
+        RandomaizeTable();
+    }
+
+    void RandomaizeTable()
+    {
+        // generate table item list random values for testing keep 3 types in use
+        var random = new Random();
+        var randomValues = new List<TableItem>();
+        for (int i = 0; i < 100; i++)
+        {
+            // generate random name
+            var name = "";
+            for (int j = 0; j < random.Next(5, 10); j++)
+            {
+                name += (char)random.Next(65, 90);
+            }
+
+            randomValues.Add(new TableItem()
+                {
+                    ID = i,
+                    Name = name,
+                    Value = random.Next(0, 100),
+                    TableItemType = (TableItemType)random.Next(0, 3)
+                });
+        }
+
+        Data = randomValues;
+    }
+
+    protected override void OnInitialized()
+    {
+        
+       
+        base.OnInitialized();
+    }
+
+
+    public class TableItem
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int Value { get; set; }
+        public TableItemType TableItemType { get; set; }
+    }
+
+    public enum TableItemType
+    {
+        typeA,
+        typeB,
+        typeC
+    }
+}
